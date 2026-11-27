@@ -3,8 +3,8 @@
 **Single-Pass Joint Evidence Selection for Long-Term Conversational Memory**
 
 [![Preprint](https://img.shields.io/badge/Paper-Preprint-b31b1b.svg)](#citation)
-[![HuggingFace Model](https://img.shields.io/badge/🤗%20Model-Vernier--1.7B-yellow.svg)](https://huggingface.co/Beichen-Hg/vernier-1.7b)
-[![HuggingFace Dataset](https://img.shields.io/badge/🤗%20Dataset-Vernier--Synth-blue.svg)](https://huggingface.co/datasets/Beichen-Hg/vernier-synth-537)
+[![HuggingFace Model](https://img.shields.io/badge/🤗%20Model-Vernier--1.7B-yellow.svg)](https://huggingface.co/BertramM/vernier-1.7b)
+[![HuggingFace Dataset](https://img.shields.io/badge/🤗%20Dataset-Vernier--Synth-blue.svg)](https://huggingface.co/datasets/BertramM/vernier-synth-537)
 [![License](https://img.shields.io/badge/License-Apache%202.0-green.svg)](LICENSE)
 
 > **TL;DR:** Instead of compressing histories offline with LLMs or packing fixed top-$k$ verbatim turns, **Vernier** runs a single zero-decode forward pass of a 1.7B language model plus a 2-layer position-free bidirectional set head over frozen Top-32 candidates (~50 ms, 7.25 GB VRAM), then packs the highest-value subset via exact knapsack dynamic programming (~0.2 ms CPU) under one fixed threshold $\tau = 0.05$.
@@ -39,8 +39,8 @@ Across **5 frozen readers** (`Qwen3-8B`, `Qwen3-14B`, `Mistral-Nemo-12B`, `Qwen3
    - `vernier/packing.py` — exact knapsack dynamic programming (`knapsack_pack`, Algorithm 1) and chronological calendar session rendering.
    - `vernier/frontend.py` — frozen `BGE-M3` + TF-IDF RRF ($k=60$) + `BaseProvence` Top-32 front-end.
    - `vernier/prompts.py` — verbatim symmetric selector, reader, and judge prompts (Boxes E1–E3).
-2. **Pretrained Weights (Apache-2.0):** `vernier-1.7b` (`s42` primary + `s43`/`s44` multi-seed LoRA adapters & bidirectional set head, ~394 MB per seed) on HuggingFace (`Beichen-Hg/vernier-1.7b`).
-3. **Capability-Driven Synthetic Corpus (Apache-2.0, zero real user PII):** 537 zero-overlap multi-session dialogues across six everyday domains (459 train / 78 val; 4,622 train / 766 val queries) on HuggingFace (`Beichen-Hg/vernier-synth-537`).
+2. **Pretrained Weights (Apache-2.0):** `vernier-1.7b` (`s42` primary + `s43`/`s44` multi-seed LoRA adapters & bidirectional set head, ~394 MB per seed) on HuggingFace ([`BertramM/vernier-1.7b`](https://huggingface.co/BertramM/vernier-1.7b)).
+3. **Capability-Driven Synthetic Corpus (Apache-2.0, zero real user PII):** 537 zero-overlap multi-session dialogues across six everyday domains (459 train / 78 val; 4,622 train / 766 val queries) on HuggingFace ([`BertramM/vernier-synth-537`](https://huggingface.co/datasets/BertramM/vernier-synth-537)).
 
 > **License Compliance Note:** Public evaluation benchmarks (`LongMemEval`, `LoCoMo-1986`, `UtilMem`) are **not** redistributed here—please obtain them from their official repositories. In accordance with the `CC-BY-NC-ND-4.0` license of `naver/provence-reranker-debertav3-v1`, no derivative `Set-Encoder`-style weights are distributed.
 
