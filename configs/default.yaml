@@ -1,0 +1,58 @@
+# Vernier Default Configuration (Table A1)
+
+frontend:
+  dense_model: BAAI/bge-m3
+  reranker_model: naver/provence-reranker-debertav3-v1
+  rrf_k: 60
+  pool_size: 80
+  top_m: 32
+
+selector:
+  backbone: Qwen/Qwen3-1.7B
+  dtype: bfloat16
+  max_cand_tokens: 72
+  lora:
+    r: 32
+    alpha: 64
+    dropout: 0.05
+    target_modules:
+      - q_proj
+      - k_proj
+      - v_proj
+      - o_proj
+      - gate_proj
+      - up_proj
+      - down_proj
+  set_head:
+    hidden_size: 2048
+    pool_stats_dim: 4
+    pool_stats_mlp_hidden: 512
+    num_layers: 2
+    nhead: 16
+    dim_feedforward: 4096
+    dropout: 0.1
+    temperature_clamp: [0.5, 3.0]
+
+training:
+  optimizer: adamw
+  weight_decay: 0.01
+  lr_lora: 1.5e-4
+  lr_head: 4.0e-4
+  grad_clip: 1.0
+  batch_size: 8
+  grad_accum: 2
+  epochs: 2
+  warmup_ratio: 0.08
+  perm_every_n_microbatches: 3
+  loss_weights:
+    bce: 1.0
+    rank: 0.55
+    perm: 0.50
+    prem: 0.10
+  seeds: [42, 43, 44]
+
+packing:
+  tau: 0.05
+  k_min: 2
+  budget_default: 1000
+  budget_locomo: 650

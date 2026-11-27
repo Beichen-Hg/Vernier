@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.venv/
+venv/
+.env
+*.pkl
+*.pt
+*.safetensors
+*.jsonl
+!examples/*.jsonl
+logs/
+outputs/
+checkpoints/
+.DS_Store
